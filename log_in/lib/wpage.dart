@@ -1,8 +1,9 @@
 import 'dart:convert';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart'; 
+import 'package:intl/intl.dart';
 
 class WeatherScreen extends StatefulWidget {
   const WeatherScreen({super.key});
@@ -15,14 +16,12 @@ class _WeatherScreenState extends State<WeatherScreen> {
   String location = "Loading...";
   String temperature = "--";
   String weatherIcon = "☀️";
- 
 
-  final String apiKey = "e3d03369252b836d0a79d93e442164b5"; // Replace this
+  final String apiKey = "e3d03369252b836d0a79d93e442164b5";
 
   @override
   void initState() {
     super.initState();
-
     _getWeather();
   }
 
@@ -63,65 +62,109 @@ class _WeatherScreenState extends State<WeatherScreen> {
 
   @override
   Widget build(BuildContext context) {
-    String TOdayDate = DateFormat('MM/dd/yyyy').format(DateTime.now());
+    String todayDate = DateFormat('MM/dd/yyyy').format(DateTime.now());
+
     return Scaffold(
-      backgroundColor: Colors.grey,
-      body: Padding(
-        padding: const EdgeInsets.all(40),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Weather',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  TOdayDate,
-                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-              ],
+      extendBodyBehindAppBar: true,
+      body: Stack(
+        children: [
+          // Background image
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/br.png'),
+                fit: BoxFit.cover,
+              ),
             ),
-            const SizedBox(height: 20),
-            Expanded(
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+          ),
+          // Light overlay for readability
+          Container(color: Colors.grey.withOpacity(0.1)),
+
+          // Main content
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Header: Weather & Date
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "Location: $location",
-                      style: const TextStyle(
-                        fontSize: 20,
+                    const Text(
+                      'Weather',
+                      style: TextStyle(
+                        fontSize: 24,
                         fontWeight: FontWeight.bold,
+                        color: Colors.white, // changed to white
                       ),
                     ),
-                    const SizedBox(height: 10),
                     Text(
-                      weatherIcon,
-                      style: const TextStyle(fontSize: 80),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      "$temperature °C",
+                      todayDate,
                       style: const TextStyle(
-                        fontSize: 40,
+                        fontSize: 24,
                         fontWeight: FontWeight.bold,
+                        color: Colors.white, // changed to white
                       ),
                     ),
                   ],
                 ),
-              ),
+                const SizedBox(height: 20),
+
+                // Frosted card with border
+                Expanded(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                      child: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(
+                            color: Colors.white.withOpacity(0.5),
+                            width: 2,
+                          ),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Location: $location",
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white, // white text
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              weatherIcon,
+                              style: const TextStyle(
+                                fontSize: 80,
+                                color: Colors.white, // white text
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              "$temperature °C",
+                              style: const TextStyle(
+                                fontSize: 40,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white, // white text
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

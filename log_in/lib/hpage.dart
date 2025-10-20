@@ -6,7 +6,7 @@ import 'spage.dart';
 class HomepageScreen extends StatefulWidget {
   static const String id = 'HomepageScreen';
 
-  HomepageScreen({super.key});
+  const HomepageScreen({super.key});
 
   @override
   State<HomepageScreen> createState() => _MyWidgetState();

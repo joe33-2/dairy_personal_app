@@ -9,75 +9,155 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey,
+      extendBodyBehindAppBar: true, // allow image behind the top
       body: Stack(
         children: [
-          const Align(
-            alignment: Alignment(0.0, -0.5),
-            child: CircleAvatar(
-              radius: 130,
-              backgroundColor: Colors.red,
-              backgroundImage: NetworkImage(
-                'https://thumb.ac-illust.com/51/51e1c1fc6f50743937e62fca9b942694_t.jpeg',
+          // Background image
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/br.png'),
+                fit: BoxFit.cover,
               ),
             ),
           ),
+
+          // Semi-transparent overlay for glass effect
+          Container(
+            color: Colors.black.withOpacity(0.3),
+          ),
+
+          // Foreground content
           Padding(
-            padding: const EdgeInsets.all(50),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(height: 60),
-                const TextField(
-                  decoration: InputDecoration(
-                    labelText: 'Email',
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.person),
+            padding: const EdgeInsets.all(40),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    'Welcome Back',
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 10),
-                const TextField(
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.lock),
+                  const SizedBox(height: 30),
+
+                  // Email field
+                  TextField(
+                    style: const TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      labelText: 'Email',
+                      labelStyle: const TextStyle(color: Colors.white),
+                      prefixIcon: const Icon(Icons.person, color: Colors.white),
+                      filled: true,
+                      fillColor: Colors.white.withOpacity(0.1),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(color: Colors.white),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(color: Colors.white),
+                      ),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 5),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => HomepageScreen()),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
+                  const SizedBox(height: 15),
+
+                  // Password field
+                  TextField(
+                    obscureText: true,
+                    style: const TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      labelStyle: const TextStyle(color: Colors.white),
+                      prefixIcon: const Icon(Icons.lock, color: Colors.white),
+                      filled: true,
+                      fillColor: Colors.white.withOpacity(0.1),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(color: Colors.white),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(color: Colors.white),
+                      ),
+                    ),
                   ),
-                  child: const Text('Login'),
-                ),
-                const SizedBox(height: 5),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const ForgotPasswordScreen()),
-                    );
-                  },
-                  child: const Text('Forgot Password'),
-                ),
-                const SizedBox(height: 5),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const SigninScreen()),
-                    );
-                  },
-                  child: const Text('Sign up'),
-                ),
-              ],
+                  const SizedBox(height: 25),
+
+                  // Login Button
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HomepageScreen(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white.withOpacity(0.2),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 80,
+                        vertical: 15,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        side: const BorderSide(color: Colors.white),
+                      ),
+                    ),
+                    child: const Text(
+                      'Login',
+                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    ),
+                  ),
+
+                  const SizedBox(height: 15),
+
+                  // Forgot Password
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              const ForgotPasswordScreen(),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      'Forgot Password?',
+                      style: TextStyle(
+                        color: Colors.white,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  // Sign up
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SigninScreen(),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      'Sign up',
+                      style: TextStyle(
+                        color: Colors.white,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
