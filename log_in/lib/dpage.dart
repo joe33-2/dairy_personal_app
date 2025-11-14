@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'note.dart';
 import 'package:intl/intl.dart';
-import 'dart:ui'; // For BackdropFilter
+import 'dart:ui';
 
 class DiaryScreen extends StatefulWidget {
   const DiaryScreen({super.key});
